@@ -1,0 +1,79 @@
+const pledgeformModel = require("../model/pledgeform");
+const nodemailer = require('nodemailer');
+require("dotenv").config();
+
+exports.save = async (req, res) => {
+    try {
+        const { companyName, representativeFullName, officeEmail, phoneNummber, message } = req.body;
+
+        let newPledge = new pledgeformModel({
+            companyName, representativeFullName, officeEmail, phoneNummber, message
+        });
+
+        let data = await newPledge.save();
+
+        // Extract relevant information from data and format the email content with an HTML table
+        const userData = `
+            <h2 style="color: #3498db;">New Lead Generated:</h2>
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><strong>Company Name:</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${companyName}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><strong>Representative Full Name:</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${representativeFullName}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><strong>Office Email:</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${officeEmail}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><strong>Phone Number:</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${phoneNummber}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><strong>Message:</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${message}</td>
+                </tr>
+            </table>
+        `;
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASS
+            }
+        });
+
+        const sendEmail = (subject, body) => {
+            // Define email options with HTML content
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: process.env.EMAIL,
+                subject: subject,
+                html: body // Use 'html' instead of 'text' for HTML content
+            };
+
+            // Send email
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        };
+
+        const subject = 'New Lead Generated';
+        sendEmail(subject, userData);
+
+        res.status(200).json({ err: 200, msg: "Saved successfully", data });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ err: 500, message: "server error" });
+    }
+};
+
