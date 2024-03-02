@@ -4,6 +4,7 @@
     "builds": [
         {
             "src": "server.js",
+            "maxDuration": 10,
             "use": "@vercel/node"
         }
     ],
