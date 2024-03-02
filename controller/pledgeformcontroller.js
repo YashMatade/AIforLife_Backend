@@ -44,8 +44,8 @@ exports.save = async (req, res) => {
 
             auth: {
                 type: 'OAuth2',
-                user: process.env.EMAIL,
-                pass: process.env.PASS
+                user: "inbox@5w1h.media",
+                pass: "zxjd ftup vwpz ophv"
             }
         });
 
@@ -53,8 +53,8 @@ exports.save = async (req, res) => {
         const sendEmail = (subject, body) => {
             // Define email options with HTML content
             const mailOptions = {
-                from: process.env.EMAIL,
-                to: process.env.EMAIL,
+                from: "inbox@5w1h.media",
+                to: "inbox@5w1h.media",
                 subject: subject,
                 html: body // Use 'html' instead of 'text' for HTML content
             };
