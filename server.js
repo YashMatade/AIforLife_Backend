@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRoutes);
 
-app.use("/", (req, res) => {
-    res.json({ message: "Server started" })
+app.get("/", (req, res) => {
+    res.send("Server is Running")
 })
 
 mongodbConnection();
