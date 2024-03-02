@@ -1,12 +1,12 @@
 {
     "version": 2,
     "name": "native-server",
-    "builds": [
-        {
+    "functions": {
+        "api": {
             "src": "server.js",
-            "use": "@vercel/node"
+            "maxDuration": 10
         }
-    ],
+    },
     "routes": [
         {
             "src": "/(.*)",

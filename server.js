@@ -5,11 +5,17 @@ const cors = require("cors");
 require("dotenv").config();
 const { mongodbConnection } = require("./config");
 const indexRoutes = require("./routes/index");
-app.use(cors());
 
+app.use(cors());
+app.use(cors({
+    origin: '*', // Allow requests from this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable cookies and authorization headers
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRoutes);
+
 
 app.get("/", (req, res) => {
     res.send("Server is Running")
