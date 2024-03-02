@@ -12,7 +12,6 @@ exports.save = async (req, res) => {
 
         let data = await newPledge.save();
 
-        // Extract relevant information from data and format the email content with an HTML table
         const userData = `
             <h2 style="color: #3498db;">New Lead Generated:</h2>
 
@@ -42,11 +41,14 @@ exports.save = async (req, res) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
+
             auth: {
+                type: 'OAuth2',
                 user: process.env.EMAIL,
                 pass: process.env.PASS
             }
         });
+
 
         const sendEmail = (subject, body) => {
             // Define email options with HTML content
