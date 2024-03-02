@@ -71,9 +71,9 @@ exports.save = async (req, res) => {
         };
 
         const subject = 'New Lead Generated';
-        sendEmail(subject, userData);
+        const email = sendEmail(subject, userData);
 
-        res.status(200).json({ err: 200, msg: "Saved successfully", data });
+        res.status(200).json({ err: 200, msg: "Saved successfully", data, email });
     } catch (error) {
         console.error(error);
         res.status(500).json({ err: 500, message: "server error" });
