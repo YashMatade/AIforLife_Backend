@@ -43,9 +43,8 @@ exports.save = async (req, res) => {
             service: 'gmail',
 
             auth: {
-                type: 'OAuth2',
                 user: "inbox@5w1h.media",
-                pass: "zxjd ftup vwpz ophv"
+                pass: "ubko gjgy dnyq hgux"
             }
         });
 
