@@ -41,7 +41,9 @@ exports.save = async (req, res) => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-
+            host: "smtp.office365.com",
+            port: 587,
+            secure: false,
             auth: {
                 user: "inbox@5w1h.media",
                 pass: "ubko gjgy dnyq hgux"
