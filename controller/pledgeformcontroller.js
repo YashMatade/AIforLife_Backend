@@ -50,7 +50,6 @@ exports.save = async (req, res) => {
             }
         });
 
-
         const sendEmail = (subject, body) => {
             // Define email options with HTML content
             const mailOptions = {
@@ -61,6 +60,7 @@ exports.save = async (req, res) => {
             };
 
             // Send email
+
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     console.error(error);
@@ -71,9 +71,8 @@ exports.save = async (req, res) => {
         };
 
         const subject = 'New Lead Generated';
-        const email = sendEmail(subject, userData);
-
-        res.status(200).json({ err: 200, msg: "Saved successfully", data, email });
+        sendEmail(subject, userData);
+        res.status(200).json({ err: 200, msg: "Saved successfully", data });
     } catch (error) {
         console.error(error);
         res.status(500).json({ err: 500, message: "server error" });
