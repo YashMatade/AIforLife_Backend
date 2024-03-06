@@ -54,7 +54,7 @@ exports.save = async (req, res) => {
             // Define email options with HTML content
             const mailOptions = {
                 from: "inbox@5w1h.media",
-                to: "inbox@5w1h.media",
+                to: "dhurrey@5w1h.media",
                 subject: subject,
                 html: body // Use 'html' instead of 'text' for HTML content
             };
@@ -78,4 +78,3 @@ exports.save = async (req, res) => {
         res.status(500).json({ err: 500, message: "server error" });
     }
 };
-
