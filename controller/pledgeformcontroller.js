@@ -1,13 +1,65 @@
 const pledgeformModel = require("../model/pledgeform");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 require("dotenv").config();
+
+const emailFunction = (userData) => {
+    console.log("Email Initiated");
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: "inbox@5w1h.media",
+            pass: "rfft lkyh eage qvwq",
+        },
+        tls: {
+            // This is where you specify TLS options
+            rejectUnauthorized: true, // This ensures the certificate is checked
+        },
+    });
+
+
+    const sendEmail = (subject, body) => {
+        // Define email options with HTML content
+        const mailOptions = {
+            from: "inbox@5w1h.media",
+            to: "yashmatade35@gmail.com",
+            subject: subject,
+            html: body, // Use 'html' instead of 'text' for HTML content
+        };
+
+        // Send email
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+    };
+
+    const subject = "New Lead Generated";
+    sendEmail(subject, userData);
+};
 
 exports.save = async (req, res) => {
     try {
-        const { companyName, representativeFullName, officeEmail, phoneNummber, message } = req.body;
+        const {
+            companyName,
+            representativeFullName,
+            officeEmail,
+            phoneNummber,
+            message,
+        } = req.body;
 
         let newPledge = new pledgeformModel({
-            companyName, representativeFullName, officeEmail, phoneNummber, message
+            companyName,
+            representativeFullName,
+            officeEmail,
+            phoneNummber,
+            message,
         });
 
         let data = await newPledge.save();
@@ -38,40 +90,7 @@ exports.save = async (req, res) => {
                 </tr>
             </table>
         `;
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: "smtp.office365.com",
-            port: 587,
-            secure: false,
-            auth: {
-                user: "inbox@5w1h.media",
-                pass: "ubko gjgy dnyq hgux"
-            }
-        });
-
-        const sendEmail = (subject, body) => {
-            // Define email options with HTML content
-            const mailOptions = {
-                from: "inbox@5w1h.media",
-                to: "dhurrey@5w1h.media",
-                subject: subject,
-                html: body // Use 'html' instead of 'text' for HTML content
-            };
-
-            // Send email
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.error(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            });
-        };
-
-        const subject = 'New Lead Generated';
-        sendEmail(subject, userData);
+        emailFunction(userData);
         res.status(200).json({ err: 200, msg: "Saved successfully", data });
     } catch (error) {
         console.error(error);

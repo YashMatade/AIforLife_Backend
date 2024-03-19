@@ -14,11 +14,11 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", indexRoutes);
+app.use("/api", indexRoutes);
 
 
-app.get("/", (req, res) => {
-    res.send("Server is Running")
+app.get("/api", (req, res) => {
+    res.send("Server is Running");
 })
 
 mongodbConnection();
