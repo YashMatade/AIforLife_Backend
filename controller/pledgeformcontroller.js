@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const emailFunction = (userData) => {
-    console.log("Email Initiated");
     const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
@@ -11,7 +10,7 @@ const emailFunction = (userData) => {
         secure: false,
         auth: {
             user: "inbox@5w1h.media",
-            pass: "rfft lkyh eage qvwq",
+            pass: "rfftlkyheageqvwq",
         },
         tls: {
             // This is where you specify TLS options
